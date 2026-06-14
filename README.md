@@ -1,259 +1,51 @@
-# 🚀 Hospital Patient Billing Management System
+# CityMed Hospital Management System
 
-> **An Excel-based hospital management and billing solution designed to manage patient records, billing operations, payment tracking, and hospital analytics through automated dashboards and reports.**
+An automated, relational Patient and Billing Management System built natively in Microsoft Excel 2021 for mid-size facilities (10–50 doctors, 100 beds). This system manages the complete patient lifecycle, operational logs, insurance claims, and financial workflows entirely through formulas—eliminating macro overhead and enterprise ERP dependencies.
 
-The **Hospital Patient Billing Management System** helps hospitals efficiently manage patient information, billing details, payment status, and analytical reporting using Microsoft Excel automation and dashboard functionalities.
+## Data Architecture & Core Relationships
 
-⚡ Automated calculations
-📊 Interactive dashboards
-🏥 Patient management system
-💳 Billing and payment tracking
+The workbook implements a relational database structure using native Excel Tables (`Ctrl+T`) and dynamic `XLOOKUP` chains to pass data seamlessly across 12 sheets divided into 4 functional layers.
+### Worksheet Architecture & Schema
 
----
-
-# ✨ Features
-
-## 🧾 Patient Information Management
-
-* Store patient records
-* Manage patient IDs
-* Track doctor assignments
-* Maintain admission details
-
-## 💰 Billing Management
-
-* Automatic bill calculations
-* Payment tracking system
-* Pending payment identification
-* Revenue calculation
-
-## 📊 Interactive Dashboards
-
-* Hospital performance dashboard
-* Patient statistics dashboard
-* Revenue visualization
-* Chart-based analytics
-
-## 🔍 Patient Search System
-
-* Quick patient lookup
-* Search by patient details
-* Easy record access
-
-## 🧹 Data Cleaning & Validation
-
-* Removes inconsistent records
-* Handles missing values
-* Data validation support
-* Organized clean datasets
+* **LOOKUP (Hidden):** Houses 17 named ranges driving strict global data validation dropdowns.
+* **INSTRUCTIONS:** Onboarding workspace containing user navigation grids and operational rules.
+* **PT_Master (`PT-00000`):** Central patient registry. Records demographics, tracks insurance providers, and automates real-time age calculation via `DATEDIF`.
+* **DR_Master (`DR-000`):** Doctor directory tracking availability across 8 medical departments with a 3-tier fee matrix (OPD Consultation, IPD Daily Visit, Emergency).
+* **SVC_RateCard (`SVC-0000`):** Centralized price master for 50 services mapping out specific GST tiers (0%, 5%, 12%, 18%) and insurance eligibility flags.
+* **BED_Master (`BED-000`):** Live bed inventory across 5 ward variants. Dynamically tracks occupancy, maintenance schedules, and flags ICU availability.
+* **ADM_Log (`ADM-00000`):** Encounters log for OPD, IPD, and Emergency admissions. Automates patient/doctor details using nested lookups and tracks ICD-10 codes.
+* **SVC_Log (`SL-00000`):** Transactional billing ledger. Logs all services utilized during a visit. Automatically scales room charges based on calculated Length of Stay (LOS).
+* **BILLING (`BILL-00000`):** Main invoice engine. Aggregates service totals via `SUMIFS`, handles manual discounts with approval states, and manages the explicit Insurance-vs-Patient split.
+* **PAYMENTS (`PAY-00000`):** Accounts Receivable ledger. Keeps a running balance across partial payments and automates a 4-bucket AR aging matrix (0-30, 31-60, 61-90, 90+ days) relative to `TODAY()`.
+* **INSURANCE (`INS-00000`):** Claims management engine. Tracks authorization lifecycles, maps TPA references, and surfaces financial variance anomalies.
+* **DASHBOARD / ANALYTICS:** Consolidated reporting command centers processing 30+ operational KPIs via `SUMPRODUCT` and `COUNTIFS`. Houses 4 interactive Pivot Charts linked to dynamic global Slicers.
 
 ---
 
-# 🖼️ Application Preview
+## Technical Specifications & Integrity Controls
 
-## 🔹 Home Dashboard
+### Professional Print Optimization
+* **Pre-Set Print Areas:** The Executive Dashboard and individual Invoice views are configured with defined boundaries. Core data models are explicitly designed to keep key metrics intact and isolated without text clipping when exported directly to PDF or hardcopy layouts.
+* **Visual Formatting:** High-contrast row treatments and formula-driven Conditional Formatting scale clean boundaries across clean, report-ready dimensions.
 
-<img width="1600" height="948" alt="dash" src="https://github.com/user-attachments/assets/c2717bf0-7a9c-4e70-b972-4f3a20a647ef" />
-
-
-## 🔹 Hospital Dashboard
-
- <img width="1600" height="948" alt="image" src="https://github.com/user-attachments/assets/d60371d5-8f5e-45b3-b251-a0409542380c" />
-
-```
+### Data Governance & Error Prevention
+* **Hard Dropdown Enforcement:** All categorical entries are bound to restricted inputs powered by named ranges to block manual transcription or typographical error entry.
+* **Formula Isolation Security:** Every calculation row, lookup logic engine, and core data matrix cell is locked under Workbook Sheet Protection to prevent structural corruption by non-technical system operators.
+* **Blank Cell Handling:** Nested formulas are cleanly insulated with `IFERROR` strings to suppress native broken formatting expressions such as `#N/A` or `#DIV/0!`.
 
 ---
 
-# 🧠 How It Works
+## Installation & Environment
 
-## System Flow
+### System Requirements
+* Microsoft Excel 2021 or Microsoft 365 (Desktop installation required for full feature compatibility).
+* No macro or VBA execution permissions required (100% formulas-based platform).
 
-```text
-Patient Data Entry
-          ↓
-Raw Data Collection
-          ↓
-Data Cleaning Process
-          ↓
-Billing Calculation
-          ↓
-Database Storage
-          ↓
-Dashboard Analytics
-          ↓
-Report Generation
-```
----
-### Step-by-Step Process
-
-1. User enters patient details.
-2. Data gets stored in raw data sheets.
-3. Data cleaning formulas process records.
-4. Billing information is calculated automatically.
-5. Payment status gets updated.
-6. Dashboards generate insights and reports.
+### Setup & Usage Steps
+1. Download `excelProject.xlsx` from this repository.
+2. Launch the workbook via your local Microsoft Excel application.
+3. Click **Enable Editing** on the standard Microsoft security ribbon if prompted.
+4. Open the `INSTRUCTIONS` sheet first to review navigation patterns and structural workflows before populating data.
 
 ---
-
-# 🏗️ System Architecture
-
-## Excel-Based Architecture
-
-```text
-User Interface        → Home Sheet
-Patient Form          → Data Entry Sheet
-Raw Storage           → RAW_DATA
-Clean Dataset         → CLEAN_DATA
-Database              → DATA_BASE
-Patient Search        → Search_Patient
-Analytics             → Dashboards
-```
-
-### Why this architecture is useful:
-
-✅ Easy to use
-✅ No database setup required
-✅ Automated calculations
-✅ Dashboard visualization
-✅ Low-cost implementation
-
----
-
-# 🏗️ Tech Stack
-
-| Technology      | Purpose         |
-| --------------- | --------------- |
-| Microsoft Excel | Core Platform   |
-| Excel Formulas  | Data Processing |
-| Charts          | Visualization   |
-| Dashboards      | Analytics       |
-| VBA/Macros      | Automation      |
-| Data Validation | Data Cleaning   |
-
----
-
-# 📂 Project Structure
-
-```text
-Hospital_Patient_Billing_Management_System/
-│
-├── Home
-├── data_entry
-├── RAW_DATA
-├── CLEAN_DATA
-├── DATA_BASE
-├── Search_Patient
-├── Patient_Dashboard
-├── Hospital_Dashboard
-├── README.md
-```
-
----
-
-# ⚡ Installation & Setup
-
-## 1️⃣ Download Project
-
-Download the Excel project file.
-
----
-
-## 2️⃣ Open Excel File
-
-Open:
-
-```text
-Hospital_Patient_Billing_Management_System.xlsm
-```
-
----
-
-## 3️⃣ Enable Macros
-
-When opening Excel:
-
-```text
-Click "Enable Content"
-```
-
-This allows automated features and macros to run correctly.
-
----
-
-## 4️⃣ Start Using Application
-
-Navigate through:
-
-* Home
-* Data Entry
-* Search Patient
-* Dashboard
-
----
-
-# 📈 Dashboard Metrics
-
-The system tracks:
-
-* Total Patients
-* Total Revenue
-* Pending Payments
-* Patient Count
-* Average Length of Stay
-* Payment Status
-* Doctor-wise Patients
-
----
-
-# 🎯 Use Cases
-
-* Hospital patient management
-* Billing systems
-* Healthcare reporting
-* Medical administration
-* Revenue analysis
-* Academic Excel projects
-
----
-
-# 🔐 Data Integrity
-
-* Input validation
-* Error handling using formulas
-* Missing value detection
-* Structured data management
-
----
-
-# 🚀 Future Improvements
-
-* Database integration (MySQL)
-* Login authentication
-* Appointment management
-* Doctor management system
-* Automated PDF bill generation
-* Email notification system
-* Cloud storage support
-
----
-
-# 👨‍💻 Developer
-
-**Jyotirmoy_Mukherjee**
-
-Excel & Software Development Enthusiast
-
----
-
-# ⭐ Contributing
-
-Contributions are welcome!
-
-1. Fork repository
-2. Create feature branch
-3. Commit changes
-4. Open pull request
-
----
-
-
+**Developer:** Jyotirmoy Mukherjee
