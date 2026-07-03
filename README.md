@@ -6,6 +6,8 @@ An automated, relational Patient and Billing Management System built natively in
 
 The workbook implements a relational database structure using native Excel Tables (`Ctrl+T`) and dynamic `XLOOKUP` chains to pass data seamlessly across 12 sheets divided into 4 functional layers.
 ### Worksheet Architecture & Schema
+<img width="954" height="383" alt="Screenshot 2026-07-03 030501" src="https://github.com/user-attachments/assets/95918fa7-a065-49f5-816b-e1d1861f2f67" />
+
 
 * **LOOKUP (Hidden):** Houses 17 named ranges driving strict global data validation dropdowns.
 * **INSTRUCTIONS:** Onboarding workspace containing user navigation grids and operational rules.
@@ -19,6 +21,7 @@ The workbook implements a relational database structure using native Excel Table
 * **PAYMENTS (`PAY-00000`):** Accounts Receivable ledger. Keeps a running balance across partial payments and automates a 4-bucket AR aging matrix (0-30, 31-60, 61-90, 90+ days) relative to `TODAY()`.
 * **INSURANCE (`INS-00000`):** Claims management engine. Tracks authorization lifecycles, maps TPA references, and surfaces financial variance anomalies.
 * **DASHBOARD / ANALYTICS:** Consolidated reporting command centers processing 30+ operational KPIs via `SUMPRODUCT` and `COUNTIFS`. Houses 4 interactive Pivot Charts linked to dynamic global Slicers.
+* <img width="983" height="386" alt="Screenshot 2026-07-03 030555" src="https://github.com/user-attachments/assets/16147ad4-9695-47e7-b623-59e79f3be871" />
 
 ---
 
